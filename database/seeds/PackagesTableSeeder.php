@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Package;
+use Faker\Generator as Faker;
 
 class PackagesTableSeeder extends Seeder
 {
@@ -10,16 +11,18 @@ class PackagesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        $newPackage = new Package();
-        $newPackage->code = 'bkk-2021-43';
-        $newPackage->destination = 'Bangkok';
-        $newPackage->nights_number = 14;
-        $newPackage->departure = '2021-02-12';
-        $newPackage->accomodation = 'Siam Hotel';
-        $newPackage->flight = 1;
-        $newPackage->price = 1500;
-        $newPackage->save();
+        for ($i = 0; $i < 50; $i++) {
+            $newPackage = new Package();
+            $newPackage->code = $faker->bothify('???-####-###');
+            $newPackage->destination = $faker->city();
+            $newPackage->nights_number = $faker->numberBetween(4, 21);;
+            $newPackage->departure = $faker->date('Y-m-d');
+            $newPackage->accomodation = $faker->company() . ' Hotel';
+            $newPackage->flight = $faker->numberBetween(0, 1);
+            $newPackage->price = $faker->numberBetween(300, 5000);
+            $newPackage->save();
+        }
     }
 }
